@@ -11,24 +11,24 @@ class AboutView(TemplateView):
                    template_name='about.html'
 
 class PostListView(ListView):
-                   model=Post 
-
-                   def get_queryset(self):
-                           return Post.objects.filter(publised_date__Ite=timezone.now()).order_by('-published_date') 
+                   model=Post
+                   template_name='post_list.html'
+                    
+                   def  get_queryset(self):   
+                        return Post.objects.filter(publish_date=timezone.now()).order_by('publish_date'),
 class PostDetailView(DetailView):
+
                    model=Post                           
 
-class CreatePostVieww(LoginRequiredMixin,CreateView):
+class CreatePostView(LoginRequiredMixin,CreateView):
                    login_url ='/login/'
-
-                   redirect_field_name='blogapp/post_details.html'
+                   redirect_field_name='blogapp/post_detail.html'
                    form_name=PostForm
                    model=Post                   
 
 class PostUpdateView(LoginRequiredMixin,UpdateView):
                    login_url ='/login/'
-
-                   redirect_field_name='blogapp/post_details.html'
+                   redirect_field_name='blogapp/post_detail.html'
                    form_name=PostForm
                    model=Post                   
 class PostDeleteView(LoginRequiredMixin,DeleteView):
@@ -41,7 +41,7 @@ class DraftListView(ListView,LoginRequiredMixin):
                    
                                      
                    def  get_queryset(self):
-                         return Post.objects.filter(publised_date__isnull=True).order_by('created_date')
+                         return Post.objects.filter(publish_date__isnull=True).order_by('create_date')
 
 ######################################
 ###################################

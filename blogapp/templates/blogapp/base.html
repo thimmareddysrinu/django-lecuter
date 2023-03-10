@@ -1,5 +1,5 @@
 <!doctype html>
-{% load staticfiles %}
+{% load static %}
 <meta>
 <html lang="en">
   <head>
@@ -25,23 +25,49 @@
     <nav class="navbar navbar-default techfont custom-navbar">
       <div  class="container">
         <ul class="nav navbar-nav">
-          <li><a href="navbar-brand bigbrand">mypost</a></li>
+          <li><a class="navbar-brand bigbrand"href="{% url 'post_list'%}">mypost</a></li>
           <li><a href="https://www.github.com">github</a></li>
           <li><a href="https://www.linkedin.com">linkedin</a></li>
           <li><a href={% url 'about'%}>about</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          {% if user.is authenticated%}
+          {% if user.is_authenticated %}
 
-          <li><a href={% url'post_new'%}>post</a></li>
-          <li><a href={% url'post_draft_list'%}>draft</a></li>
-          <li><a href={% url'logout'%}>logout</a></li>
+           <li>
+            <a href="{% url'post_new'%}">post</a>
+           </li>
+           <li>
+            <a href="{% url'post_draft_list'%}">draft</a>
+           </li>
+           <li>
+            <a href="{% url'logout'%}">logout</a>
+           </li>
+           <li>
+            <a>welcome: {{ user.username}}</a>
+           </li>
+            {%  else %}
+            <li><a class="nav navbar-right" href="{% url'login'%}"><spanclass='glyphicon glyphicon-user'></span></a></li>
+
           {% endif %}
         </ul>
       </div>
     </nav>
 
     <!--content-->
+    <div class='content container'>
+      <div class='row'>
+        <div class='col-md-8'>
+          <div class='blog_posts'>
+            {% block content  %}
+            {% endblock  %}
+        
+          </div>
+        
+        </div>
+
+      </div>
+
+    </div>
     
   </body>
 </html>

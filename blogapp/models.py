@@ -7,7 +7,7 @@ class Post(models.Model):
                    author=models.ForeignKey('auth.user',on_delete=models.DO_NOTHING)
                    title=models.CharField(max_length=200)
                    text=models.TextField()
-                   created_date=models.DateTimeField(default=timezone.now())
+                   create_date=models.DateTimeField(auto_now_add='true')
                    publish_date=models.DateTimeField(null=True,blank=True)
 
 
@@ -26,10 +26,10 @@ class Post(models.Model):
                                    
 class Comment(models.Model):
                    post=models.ForeignKey('blogapp.Post',related_name='comments',on_delete=models.DO_NOTHING)
-                   author=models.CharField(max_length=200)
+                   author=models.CharField(max_length=200,default='anything')
                    text=models.TextField()
-                   create_date=models.DateTimeField(default=timezone.now())
-                   approved_comment=models.BooleanField(default=False)
+                   create_date=models.DateTimeField(auto_now_add='true')
+                   approved_comment=models.BooleanField( 'Enabled?')
 
                    def approve(self):
                        self.approved_comment = True 
